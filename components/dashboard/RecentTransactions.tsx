@@ -1,0 +1,3 @@
+- Transaction list with icons
+- Buy/Sell indicators
+- Time stamps 

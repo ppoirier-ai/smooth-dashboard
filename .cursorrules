@@ -1,0 +1,206 @@
+### Frontend Structure
+/app
+  /dashboard
+    /balance
+    /assets
+    /trading
+/components
+  /ui          # Shadcn components
+  /charts
+  /forms
+/lib
+  /api        # API client functions
+  /utils
+/types
+/hooks
+
+## Backend API Service
+
+### Core Technologies
+- Node.js/Express - API server
+- TypeScript - Type safety
+- Redis - Cache layer
+- JWT - API authentication
+
+### Backend Structure
+/src
+  /api
+    /routes
+    /controllers
+    /middleware
+  /services
+    /binance     # Binance API integration
+    /websocket   # Real-time price updates
+  /config
+  /utils
+  /types
+
+### API Endpoints
+- /api/v1/balance
+- /api/v1/assets
+- /api/v1/trades
+- /api/v1/prices
+- /ws  # WebSocket endpoint
+
+### Security Layer
+- API Gateway
+- Rate limiting
+- API key management
+- CORS policies
+
+## Shared
+/types        # Shared TypeScript interfaces
+/constants    # Shared constants
+
+## Infrastructure
+- Frontend: Vercel
+- Backend: AWS ECS/Kubernetes
+- Cache: Redis Cloud
+- Monitoring: DataDog/NewRelic
+- CI/CD: GitHub Actions
+
+## Communication
+- REST API for data operations
+- WebSocket for real-time updates
+- Event-driven for async operations
+
+## Security
+- NextAuth.js - Frontend auth
+- JWT - API authentication
+- API keys stored in AWS Secrets Manager
+
+# Binance Dashboard PRD
+
+## Product Overview
+A comprehensive portfolio tracker that aggregates crypto assets across multiple Binance account types (spot, margin, futures, trading bot) with focus on BTC, SOL, and USDT positions.
+The system also tracks margin account liabilities to calculate net capital position.
+
+## User Stories
+1. As a crypto trader, I want to:
+   - View aggregated positions across all my Binance accounts
+   - See the average entry price for each asset
+   - Monitor current prices and ROI percentages
+   - Track total capital and net capital (after liabilities) in both USD and asset quantities
+   - Monitor margin account health and liabilities
+   - View historical portfolio value changes
+
+2. As a portfolio manager, I want to:
+   - See historical performance data
+   - Generate performance reports
+   - Set price alerts
+   - Monitor multiple assets simultaneously
+
+## Core Features
+
+### 1. Portfolio Overview
+- Real-time total balance display in USD
+- Net capital calculation (total assets - liabilities)
+- Breakdown by account type:
+  - Spot Account
+  - Margin Account:
+    - Borrowed assets
+    - Collateral assets
+    - Account health ratio
+    - Liquidation prices for BTC/SOL positions
+    - Futures Account
+    - Trading Bot Account
+- Focus assets:
+  - Bitcoin (BTC)
+  - Solana (SOL)
+  - USDT
+
+### 2. Position Details
+- For each asset (BTC, SOL, USDT):
+  - Total quantity across all accounts
+  - Borrowed quantity (margin account)
+  - Average entry price
+  - Current market price
+  - ROI percentage
+  - USD value
+  - Distribution across account types
+  - Net position (owned - borrowed)
+
+### 3. Historical Tracking
+- Database storage of portfolio snapshots
+- Timestamp of each refresh
+- Historical value chart
+- Entry price history
+
+## Technical Requirements
+
+### API Integration
+- Binance API endpoints for different account types:
+  - GET /api/v3/account (Spot)
+  - GET /sapi/v1/margin/account (Margin Account Balance)
+  - GET /sapi/v1/margin/loan (Margin Account Loans)
+  - GET /sapi/v1/margin/rateLimit (Account Risk)
+  - GET /fapi/v2/account (Futures)
+  - GET /sapi/v1/trading-bot/accounts (Trading Bot)
+- WebSocket price feeds for BTC, SOL
+
+### Data Storage
+- PostgreSQL database for historical data
+- Schema for portfolio snapshots:
+  - Timestamp
+  - Asset balances
+  - Account distributions
+  - Entry prices
+  - Total portfolio value
+  - Margin loans:
+    - Borrowed amounts
+    - Interest rates
+    - Interest paid
+    - Account health ratio
+
+### Performance
+- Refresh rate: 1 minute
+- Data aggregation < 2 seconds
+- Historical data retention: 1 year
+- Liquidation price calculation < 100ms
+
+## Phase 1 MVP (2 weeks)
+1. Week 1:
+   - Basic Next.js setup
+   - Binance API integration for all account types
+   - Asset aggregation logic
+   - Price and ROI calculations
+
+2. Week 2:
+   - Database integration
+   - Historical tracking
+   - Basic UI implementation
+   - Position details display
+
+## Future Enhancements
+1. Support for additional assets
+2. Export functionality for tax purposes
+3. Custom time range for historical data
+4. Price alerts
+5. Mobile app version
+
+## Success Metrics
+1. User engagement metrics
+2. Trading volume through platform
+3. Portfolio tracking accuracy
+4. System uptime
+5. API response times
+
+## Project Timeline
+Phase 1 (MVP) - 6 weeks
+- Basic dashboard setup
+- Binance API integration
+- Core trading features
+- Essential security features
+
+Phase 2 - 4 weeks
+- Analytics implementation
+- AI recommendations
+- News integration
+- Enhanced UI/UX
+
+Phase 3 - 4 weeks
+- Advanced features
+- Performance optimization
+- User feedback implementation
+- Beta testing
+

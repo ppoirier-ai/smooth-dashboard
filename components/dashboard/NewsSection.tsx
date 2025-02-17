@@ -1,0 +1,3 @@
+- News cards with images
+- Popular filter
+- News headlines 

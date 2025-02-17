@@ -1,0 +1,3 @@
+- Asset selector dropdowns with icons
+- Swap direction indicator
+- Exchange button 
